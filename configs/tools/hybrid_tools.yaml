@@ -1,0 +1,36 @@
+tools:
+  # Tool 1: execute_sql - Unified for both critic (pool) and bird (direct SQLite)
+  - class_name: "bird_rl.tools.hybrid_sql_executor.HybridSqlExecutorTool"
+    config:
+      type: native
+    tool_schema:
+      type: "function"
+      function:
+        name: "execute_sql"
+        description: "Execute a SQL query against the database for exploration and testing. Returns execution results but does NOT evaluate correctness. Use this to test and refine your SQL before submitting the final solution."
+        parameters:
+          type: "object"
+          properties:
+            sql:
+              type: "string"
+              description: "A single SQL query to execute for exploration and testing."
+          required: ["sql"]
+
+  # Tool 2: submit_solution - Unified, accepts sql_list for both tasks
+  - class_name: "bird_rl.tools.hybrid_submit_solution.HybridSubmitSolutionTool"
+    config:
+      type: native
+    tool_schema:
+      type: "function"
+      function:
+        name: "submit_solution"
+        description: "Submit your final SQL solution. This ends the current task. The SQL will be executed and evaluated against test cases. Only call this when you are confident your solution is correct, as this is your final submission."
+        parameters:
+          type: "object"
+          properties:
+            sql_list:
+              type: "array"
+              items:
+                type: "string"
+              description: "List of SQL statements for the final solution. Should contain the complete, correct solution to the problem."
+          required: ["sql_list"]

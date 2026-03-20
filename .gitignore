@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Data & models
+*.sqlite
+*.db
+*.parquet
+*.pkl
+*.pt
+*.bin
+*.ckpt
+*.safetensors
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs & outputs
+*.log
+wandb/
+outputs/
+checkpoints/

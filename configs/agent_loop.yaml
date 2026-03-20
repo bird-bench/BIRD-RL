@@ -1,0 +1,9 @@
+# Custom Agent Loop Configuration for VERL
+# Defines ToolAgentLoop with automatic DB cleanup on trajectory completion
+#
+# Usage in training script:
+#   actor_rollout_ref.rollout.agent.agent_loop_config_path=/path/to/this/file
+#   actor_rollout_ref.rollout.agent.default_agent_loop=tool_agent_with_db_cleanup
+
+- name: tool_agent_with_db_cleanup
+  _target_: verl.experimental.agent_loop.tool_agent_loop_with_db_cleanup.ToolAgentLoopWithDBCleanup

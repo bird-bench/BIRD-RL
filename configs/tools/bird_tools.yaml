@@ -1,0 +1,34 @@
+tools:
+  # Tool 1: execute_sql - For testing and exploration (no evaluation)
+  - class_name: "bird_rl.tools.bird_sql_executor.BirdSqlExecutorTool"
+    config:
+      type: native
+    tool_schema:
+      type: "function"
+      function:
+        name: "execute_sql"
+        description: "Execute a SQL query against the database for exploration and testing. Returns execution results but does NOT evaluate correctness. Use this to understand the data, test hypotheses, and refine your query before submitting."
+        parameters:
+          type: "object"
+          properties:
+            sql:
+              type: "string"
+              description: "A single SQL query to execute for exploration."
+          required: ["sql"]
+
+  # Tool 2: submit_solution - For final submission (single sql string, not sql_list)
+  - class_name: "bird_rl.tools.bird_submit_solution.BirdSubmitSolutionTool"
+    config:
+      type: native
+    tool_schema:
+      type: "function"
+      function:
+        name: "submit_solution"
+        description: "Submit your final SQL solution. This ends the current task. The SQL will be executed and evaluated against test cases. Only call this when you are confident your solution is correct."
+        parameters:
+          type: "object"
+          properties:
+            sql:
+              type: "string"
+              description: "The final SQL query that answers the question."
+          required: ["sql"]
