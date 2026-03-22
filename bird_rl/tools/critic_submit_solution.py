@@ -1,41 +1,21 @@
-# Copyright 2024 Bytedance Ltd. and/or its affiliates
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 """
 Submit Solution Tool for SQL debugging.
 
 This tool:
-1. Validates and executes the submitted SQL solution
-2. Signals the end of the trajectory
-3. Returns execution status (success/failure) but NO test case evaluation
-4. Test cases are evaluated LATER in reward_function (batch processing)
+1. Accepts the model's final SQL solution
+2. Signals the end of the trajectory (agent loop terminates on this call)
+3. Does NOT execute or validate the SQL — all evaluation is deferred to the reward function
 
 Design Pattern: Trajectory Termination Signal
 - Model calls this when confident in solution
-- Tool validates SQL syntax and execution
+- Tool simply records the submission and returns immediately
 - Returns 0.0 step reward (actual reward computed in reward_function)
-- Uses same persistent DB as execute_sql tool (state carries over)
+- Actual SQL execution and test case evaluation happen in reward_function
+  with ephemeral DB (fresh state) and batch parallelization
 
 Key difference from execute_sql:
 - execute_sql: For exploration (schema checks, partial queries, testing ideas)
-- submit_solution: For final answer submission (terminates trajectory)
-
-Why NO immediate test case evaluation:
-- Test cases run in reward_function with batch parallelization
-- Reward function uses ephemeral DB (fresh state) for fair evaluation
-- This design enables efficient multi-threading in reward computation
-- Tools stay fast, reward function handles heavy computation
+- submit_solution: For final answer submission (terminates trajectory, no execution)
 """
 
 import logging
@@ -58,10 +38,10 @@ logger.setLevel(os.getenv("VERL_LOGGING_LEVEL", "WARN"))
 
 class SubmitSolutionTool(BaseTool):
     """
-    Submit Solution Tool - validates SQL and signals trajectory completion.
+    Submit Solution Tool - accepts SQL and signals trajectory completion.
 
     This tool should be called when the model is confident in the solution.
-    It validates syntax/execution but does NOT run test cases (done in reward_function).
+    It does NOT execute or validate SQL — all evaluation is deferred to reward_function.
 
     Workflow per trajectory:
     1. create() - Acquire same persistent DB from pool (shares with execute_sql tool)
@@ -174,18 +154,11 @@ class SubmitSolutionTool(BaseTool):
         **kwargs
     ) -> tuple[ToolResponse, float, dict]:
         """
-        Validate submitted solution (NO test case evaluation - done in reward_function).
+        Accept submitted solution — no execution or validation here.
 
-        This tool:
-        1. Validates SQL syntax
-        2. Executes SQL on persistent DB to check for runtime errors
-        3. Returns execution status (success/failure)
-        4. Returns 0.0 reward (actual reward computed in reward_function)
-
-        Test cases are evaluated LATER in reward_function with:
-        - Batch parallelization for efficiency
-        - Ephemeral DB mode (fresh state) for fair evaluation
-        - Multi-threading support
+        This tool simply records the submission and returns immediately.
+        All SQL execution and test case evaluation happen in reward_function
+        with ephemeral DB (fresh state) and batch parallelization.
 
         Args:
             instance_id: Trajectory ID

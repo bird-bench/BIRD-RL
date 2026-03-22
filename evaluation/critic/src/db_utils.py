@@ -1,16 +1,13 @@
 # db_utils.py
 import os
-import subprocess
 import sqlite3
 import shutil
-import signal
-import threading
 import time
 
 try:
-    from .logger import log_section_header, log_section_footer, PrintLogger, NullLogger
+    from .logger import log_section_header, log_section_footer, NullLogger
 except ImportError:
-    from logger import log_section_header, log_section_footer, PrintLogger, NullLogger
+    from logger import log_section_header, log_section_footer, NullLogger
 
 
 def perform_query_on_sqlite_databases(query, db_path, conn=None, query_timeout=30):

@@ -166,4 +166,4 @@ python -m verl.trainer.main_ppo \
 
 echo ""
 echo "Stage 4 complete. Checkpoints saved to: $OUTPUT_DIR"
-echo "This is the final model. Evaluate with scripts/eval/."
+echo "This is the final model. Evaluate with scripts/infer/."

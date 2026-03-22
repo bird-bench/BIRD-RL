@@ -8,7 +8,7 @@ The default VERL `ToolAgentLoop` treats each tool call as stateless — a fresh 
 
 BIRD-RL introduces a three-layer architecture for persistent database sessions:
 
-### Layer 1: StatefulToolAgentLoop (`bird_rl/agent_loop/`)
+### Layer 1: StatefulToolAgentLoop (`verl_patch/`)
 
 Extends VERL's `ToolAgentLoop` with three key changes:
 
@@ -21,7 +21,7 @@ Extends VERL's `ToolAgentLoop` with three key changes:
 A thread-safe SQLite connection pool:
 
 - Pre-creates working copies from template databases at startup
-- Worker partitioning: each Ray actor gets exclusive pool indices
+- Worker partitioning: each Ray actor gets exclusive pool indices to avoid file-level contention
 - Lazy reset: DB reset happens on next acquire, not during release
 - Two modes: `persistent` (tools) and `ephemeral` (reward evaluation)
 
@@ -47,15 +47,3 @@ export SQL_EXECUTION_TIMEOUT=30
 # Trajectory timeout (default: 500s)
 export TRAJECTORY_TIMEOUT=500
 ```
-
-### Pool Partitioning
-
-The pool is partitioned to prevent file-level contention between concurrent Ray actors:
-
-| Consumer | Pool Indices | Purpose |
-|----------|-------------|---------|
-| Actor 0 | 0-31 | Tool execution during rollout |
-| Actor 1 | 32-63 | Tool execution during rollout |
-| Actor 2 | 64-95 | Tool execution during rollout |
-| Actor 3 | 96-127 | Tool execution during rollout |
-| Reward | 128-159 | Evaluation on clean databases |

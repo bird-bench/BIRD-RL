@@ -38,7 +38,7 @@ def run_single_instance(instance_data, instance_id, args, ephemeral_db_path, log
 
     # Build command to run single instance evaluation script
     eval_script = os.path.join(
-        os.path.dirname(__file__), "single_instance_eval_sqlite.py"
+        os.path.dirname(__file__), "single_instance_eval.py"
     )
     cmd = [
         "python3",
@@ -55,9 +55,11 @@ def run_single_instance(instance_data, instance_id, args, ephemeral_db_path, log
         log_file_path,
     ]
 
-    # Set up environment with ephemeral database path
+    # Set up environment with ephemeral database path and db_dir fallback
     env = os.environ.copy()
     env["EPHEMERAL_DB_PATH"] = ephemeral_db_path
+    if args.db_dir:
+        env["SQL_REWARD_DB_DIR"] = args.db_dir
 
     # Log the start
     logger.info(f"Starting instance {instance_id} with DB: {ephemeral_db_path}")
@@ -411,7 +413,7 @@ def main():
     # Cleanup ephemeral databases
     print("\nCleaning up ephemeral databases...")
     try:
-        drop_ephemeral_dbs(ephemeral_db_pool_dict, "123123", logger)
+        drop_ephemeral_dbs(ephemeral_db_pool_dict, "", logger)
         print("✓ Ephemeral databases cleaned up")
     except Exception as e:
         print(f"✗ Ephemeral cleanup error: {e}")

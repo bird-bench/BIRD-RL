@@ -1,5 +1,5 @@
 """
-SQL Debugging Reward Function for Agentic/Trajectory Training: Simple Execution-Based (v0)
+SQL Debugging Reward Function for Agentic/Trajectory Training: Simple Execution-Based
 
 - pure test pass rate with no partial credit.
 
@@ -13,17 +13,6 @@ Scoring Logic (Simplest - No Reward Hacking):
   - 5/5 tests pass: 1.0
 
 Formula: score = test_pass_count / test_total_count
-
-Key Differences from v1:
-- NO 0.2 base reward for "valid but wrong SQL" (removes exploitation)
-- NO 0.02 reward for malformed submit_solution
-- NO fallback to execute_sql
-- Pure test-based scoring only
-
-Why this is better:
-- No reward hacking - can't get easy partial credit
-- Forces model to actually improve correctness
-- Clear optimization target: maximize test pass rate
 """
 
 import re

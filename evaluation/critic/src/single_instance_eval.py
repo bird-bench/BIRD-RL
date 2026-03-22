@@ -415,7 +415,7 @@ def evaluate_instance(data, args, logger):
         # Reset database only if using ephemeral
         if ephemeral_db_path and os.path.exists(ephemeral_db_path):
             try:
-                reset_and_restore_database(db_path, "123123", logger)
+                reset_and_restore_database(db_path, "", logger)
             except Exception as e:
                 logger.error(f"Error during database reset: {e}")
 

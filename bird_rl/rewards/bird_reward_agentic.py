@@ -4,15 +4,6 @@ BIRD SQL Generation Reward Function for Agentic/Trajectory Training: EX-Based
 This reward function evaluates BIRD SQL generation trajectories with tool-based
 interactions (execute_sql + submit_solution).
 
-Key Features:
-1. Extracts SQL from submit_solution tool calls (single "sql" string, not "sql_list")
-2. Falls back to last execute_sql call for truncated trajectories
-3. Uses EX metric: set(predicted_results) == set(ground_truth_results)
-4. All BIRD SQL is SELECT-only, so no ephemeral databases or pools needed
-5. Strips markdown code fences from tool call JSON
-6. Repairs common JSON issues (trailing commas, truncation)
-7. Reward shaping gives gradient signal for partial trajectories
-
 Model Output Format (matching bird_for_sft/sft_generation_prompt.py):
 - Model uses <think>...</think> tags for reasoning
 - Tool calls wrapped in <tool_call>...</tool_call> tags
