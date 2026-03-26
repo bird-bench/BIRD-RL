@@ -8,7 +8,7 @@ Copy the patch file into your VERL installation:
 
 ```bash
 VERL_PATH=$(python -c "import verl; print(verl.__path__[0])")
-cp stateful_tool_agent_loop.py $VERL_PATH/experimental/agent_loop/
+cp tool_agent_loop_with_db_cleanup.py $VERL_PATH/experimental/agent_loop/
 ```
 
 ## What It Does

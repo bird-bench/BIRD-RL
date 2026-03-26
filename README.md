@@ -2,14 +2,61 @@
 
 This is the official github for **"From Imitation to Interactive Exploration: A Multi-Stage Reinforcement Learning Framework for Tool-Augmented SQL Agents"**
 
-## Project Structure
+## ✨ Environment Setup
+
+- Create conda environment and install VERL:
+
+```bash
+conda env create -f bird_rl.yaml
+conda activate bird_rl
+git clone https://github.com/volcengine/verl.git
+cd verl
+pip install --no-deps -e .
+cd ..
+```
+
+- Apply the VERL patch (stateful tool agent loop):
+
+```bash
+VERL_PATH=$(python -c "import verl; print(verl.__path__[0])")
+cp verl_patch/tool_agent_loop_with_db_cleanup.py $VERL_PATH/experimental/agent_loop/
+```
+
+
+## ✨ Data Preparation
+
+### 📍 BIRD-Critic-SQLite Dataset
+
+We release [BIRD-Critic-SQLite](https://huggingface.co/datasets/birdsql/bird-critic-1.0-sqlite), a dataset containing 500 high-quality user issues focused on real-world SQLite database applications, alongside a train split [SIX-GYM-SQLite](https://huggingface.co/datasets/birdsql/six-gym-sqlite) comprising 5,000 data instances for model training and development.
+
+### 📍 BIRD Dataset
+
+The BIRD mini-dev dataset used in the paper can be directly downloaded from the [BIRD Leaderboard](https://bird-bench.github.io/). 
+
+## ✨ Released Models: The BIRD-RL Collection
+
+We introduce the [BIRD-RL Collection](https://huggingface.co/collections/birdsql/bird-rl), a suite of models meticulously trained to master the full SQL lifecycle.
+
+| Model | Size | Description|
+|---|---|---|
+| [BIRD-Talon-7B](https://huggingface.co/birdsql/BIRD-Talon-7b) | 7B | SQL Debugging Specialist |
+| [BIRD-Talon-14B](https://huggingface.co/birdsql/BIRD-Talon-14b) | 14B | SQL Debugging Specialist |
+| [BIRD-Zeno-7B](https://huggingface.co/birdsql/bird-zeno-7b) | 7B | Unified Multi-task Model |
+
+### 🚀 Model Highlights
+- **BIRD-Talon Series**: These models are trained via a novel **four-stage curriculum training paradigm**, comprising Reasoning Imitation → Tool-calling Imitation → Reasoning Reinforcement → Interactive Agentic Reinforcement. They excel at identifying logical and syntax errors in SQL, transforming "failed" queries into executable queries that satisfies user intent.
+
+- **BIRD-Zeno**: A unified multi-task model optimized via **principled data mixing estimation**. The targeted balancing sustains specialized debugging performance while delivering impressive performance in SQL generation tasks, demonstrating that joint optimization over the full SQL lifecycle yields synergistic gains without task interference.
+
+
+## ✨ Project Structure
 
 ```
 BIRD-RL/
 ├── bird_rl/                        # Core library
 │   ├── data/                       # Data preprocessing for all 4 stages
 │   │   ├── generate_thought_prompts.py   # Stage 1: generate prompts for thought generation
-│   │   ├── call_api.py                   # Stage 1/2: call LLM API (Bedrock) with threading
+│   │   ├── call_api.py                   # call LLM API with threading
 │   │   ├── prepare_reasoning_sft_data.py # Stage 1: extract thoughts → SFT parquet
 │   │   ├── generate_turn_prompts.py      # Stage 2: per-turn prompts with GT + history
 │   │   ├── parse_turn_responses.py       # Stage 2: extract <thought> and <tool_call>
@@ -91,6 +138,8 @@ BIRD-RL/
 │       └── run_hybrid_bird_inference.sh
 │
 └── verl_patch/                     # VERL framework patches
-    └── stateful_tool_agent_loop.py
+    └── tool_agent_loop_with_db_cleanup.py
 ```
+
+
 
