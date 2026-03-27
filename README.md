@@ -54,7 +54,7 @@ We introduce the [BIRD-RL Collection](https://huggingface.co/collections/birdsql
 
 ## ✨ Model Performance
 ### 🕊️ SQL Debugging Performance on BIRD-CRITIC-SQLite
-  | Model | Quer. | Mana. | Pers. | **Overall** |
+  | Model | Quer. | Mana. | Pers. | **Overall** (SR%)|
   |---|---|---|---|---|
   | ***General-Purpose Models*** | | | | |
   | GPT-5.4-Pro | 44.01 | 38.67 | 39.72 | **42.00** |
@@ -80,7 +80,7 @@ We introduce the [BIRD-RL Collection](https://huggingface.co/collections/birdsql
   by frontier LLMs (e.g., Claude-Opus-4.6), while requiring only 7B–14B parameters.
 
 ### 🕊️ SQL Generation Performance on BIRD
-| Method | BIRD | BIRD-Mini |
+| Model | BIRD (EX%)| BIRD-Mini (EX%)|
   |---|---|---|
   | Multi-Turn-Agent-7B | 50.9 | 48.6 |
   | Reasoning-SQL-7B | **64.0** | -- |
@@ -92,7 +92,15 @@ We introduce the [BIRD-RL Collection](https://huggingface.co/collections/birdsql
  As a unified model optimized via multi-task training, BIRD-Zeno-7B achieves competitive SQL generation performance on BIRD, comparable
   to specialized SQL generation models such as Reasoning-SQL-7B, while simultaneously maintaining strong SQL debugging
   capability.
-  
+
+### 🕊️ Performance on Multi-Dialect SQLs
+
+<p align="center">
+  <img src="assets/multi_dialect.png" width="80%">
+</p>
+
+BIRD-Talon-7B demonstrates strong **cross-dialect generalization**, achieving significant improvements over baselines without any multi-dialect training data. The four-stage training pipeline teaches the model a general debugging strategy rather than memorizing dialect-specific syntax, enabling it to adapt based on environment feedback **without needing extra training**.
+
 ## ✨ Project Structure
 
 ```
