@@ -54,50 +54,28 @@ We introduce the [BIRD-RL Collection](https://huggingface.co/collections/birdsql
 
 ## ✨ Model Performance
 ### 🕊️ SQL Debugging Performance on BIRD-CRITIC-SQLite
-  | Model | Quer. | Mana. | Pers. | **Overall** (SR%)|
-  |---|---|---|---|---|
-  | ***General-Purpose Models*** | | | | |
-  | GPT-5.4-Pro | 44.01 | 38.67 | 39.72 | **42.00** |
-  | Claude-Opus-4.6 | 50.35 | 44.00 | 39.01 | **46.20** |
-  | Claude-Sonnet-4.5 | 46.83 | 36.00 | 34.75 | **41.80** |
-  | Gemini-3.1-Pro | 53.52 | 44.00 | 41.84 | **48.80** |
-  | GLM-4.7 | 48.24 | 40.00 | 33.33 | **42.80** |
-  | Kimi-K2.5 | 46.48 | 37.33 | 35.46 | **42.00** |
-  | MiniMax-M2-1 | 38.03 | 30.67 | 32.62 | **35.40** |
-  | Qwen3-Coder-480B | 45.77 | 33.33 | 37.59 | **41.60** |
-  | ***Multi-Turn Agents*** | | | | |
-  | Claude-Opus-4.6 | 53.52 | 42.67 | 40.43 | **48.20** |
-  | Claude-Sonnet-4.5 | 44.01 | 54.67 | 37.59 | **43.80** |
-  | Qwen3-Coder-480B | 41.55 | 42.67 | 33.33 | **39.40** |
-  | BIRD-FIXER-7B | 37.32 | 26.67 | 29.79 | **33.60** |
-  | BIRD-FIXER-14B | 42.96 | 37.33 | 35.46 | **40.00** |
-  | ***BIRD-RL Models (Ours)*** | | | | |
-  | BIRD-Talon-7B | 46.13 | 45.33 | 40.43 | **44.40** |
-  | BIRD-Talon-14B | 51.06 | 50.67 | 40.43 | **48.00** |
-  | BIRD-Zeno-7B | 50.35 | 44.00 | 33.33 | **44.60** |
 
- Our BIRD-RL models achieve performance comparable to state-of-the-art general-purpose models (e.g., Gemini-3.1-Pro) and multi-turn agents backed
-  by frontier LLMs (e.g., Claude-Opus-4.6), while requiring only 7B–14B parameters.
+<p align="center">
+  <img src="assets/main_performance.png" width="80%">
+</p>
+
+Our BIRD-RL models achieve **Success Rate** (SR%) comparable to state-of-the-art general-purpose models (e.g., Gemini-3.1-Pro) and multi-turn agents backed by frontier LLMs (e.g., Claude-Opus-4.6), while requiring only 7B–14B parameters.
 
 ### 🕊️ SQL Generation Performance on BIRD
-| Model | BIRD (EX%)| BIRD-Mini (EX%)|
-  |---|---|---|
-  | Multi-Turn-Agent-7B | 50.9 | 48.6 |
-  | Reasoning-SQL-7B | **64.0** | -- |
-  | SQL-R1-7B | 58.9 | -- |
-  | OmniSQL-7B | 63.9 | -- |
-  | SQL-TRAIL-7B | 60.1 | -- |
-  | BIRD-Zeno-7B| 63.9 | 61.60 |
 
- As a unified model optimized via multi-task training, BIRD-Zeno-7B achieves competitive SQL generation performance on BIRD, comparable
-  to specialized SQL generation models such as Reasoning-SQL-7B, while simultaneously maintaining strong SQL debugging
-  capability.
+<p align="center">
+  <img src="assets/bird_performance.png" width="80%">
+</p>
+
+As a unified model optimized via multi-task training, BIRD-Zeno-7B achieves competitive SQL generation performance on BIRD, comparable to specialized SQL generation models such as Reasoning-SQL-7B, while simultaneously maintaining strong SQL debugging capability.
 
 ### 🕊️ Performance on Multi-Dialect SQLs
 
-<p align="center">
-  <img src="assets/multi_dialect.png" width="80%">
-</p>
+ | Model | PostgreSQL | MySQL | SQL Server | Oracle | **Overall** |
+  |---|---|---|---|---|---|
+  | Qwen2.5-Coder-7B | 20.65 | 23.47 | 19.39 | 7.14 | **18.60** |
+  | BIRD-Fixer-7B | 22.10 | 26.53 | 29.59 | 7.14 | **21.58** |
+  | BIRD-Talon-7B | 28.62 | 33.67 | 36.73 | 20.41 | **29.47** |
 
 BIRD-Talon-7B demonstrates strong **cross-dialect generalization**, achieving significant improvements over baselines without any multi-dialect training data. The four-stage training pipeline teaches the model a general debugging strategy rather than memorizing dialect-specific syntax, enabling it to adapt based on environment feedback **without needing extra training**.
 
