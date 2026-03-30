@@ -56,7 +56,7 @@ We introduce the [BIRD-RL Collection](https://huggingface.co/collections/birdsql
 ### 🕊️ SQL Debugging Performance on BIRD-CRITIC-SQLite
 
 <p align="center">
-  <img src="assets/main_performance.png" width="80%">
+  <img src="assets/critic_performance.png" width="80%">
 </p>
 
 Our BIRD-RL models achieve **Success Rate** (SR%) comparable to state-of-the-art general-purpose models (e.g., Gemini-3.1-Pro) and multi-turn agents backed by frontier LLMs (e.g., Claude-Opus-4.6), while requiring only 7B–14B parameters.
