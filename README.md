@@ -1,4 +1,5 @@
-# BIRD-RL: Open-source Agentic RL Project for SQL Tasks 
+# BIRD-RL: Open-source Agentic RL Project for Heterogeneous SQL Tasks
+
 
 This is the official github for **"From Imitation to Interactive Exploration: A Multi-Stage Reinforcement Learning Framework for Tool-Augmented SQL Agents"**
 
@@ -48,7 +49,7 @@ We introduce the [BIRD-RL Collection](https://huggingface.co/collections/birdsql
 | [BIRD-Zeno-7B](https://huggingface.co/birdsql/bird-zeno-7b) | 7B | Unified Multi-task Model |
 
 ### 🚀 Model Highlights
-- **BIRD-Talon Series**: These models are trained via a novel **four-stage curriculum training paradigm**, comprising Reasoning Imitation → Tool-calling Imitation → Reasoning Reinforcement → Interactive Agentic Reinforcement. They excel at identifying logical and syntax errors in SQL, transforming "failed" queries into executable queries that satisfies user intent.
+- **BIRD-Talon Series**: These models are trained via the novel **four-stage curriculum training paradigm**. They excel at identifying logical and syntax errors in SQL, transforming "failed" queries into executable queries that satisfies user intent.
 
 - **BIRD-Zeno**: A unified multi-task model optimized via **principled data mixing estimation**. The targeted balancing sustains specialized debugging performance while delivering impressive performance in SQL generation tasks, demonstrating that joint optimization over the full SQL lifecycle yields synergistic gains without task interference.me
 
@@ -69,13 +70,13 @@ Our BIRD-RL models achieve **Success Rate** (SR%) comparable to state-of-the-art
 
 As a unified model optimized via multi-task training, BIRD-Zeno-7B achieves competitive SQL generation performance on BIRD, comparable to specialized SQL generation models such as Reasoning-SQL-7B, while simultaneously maintaining strong SQL debugging capability.
 
-### 🕊️ Performance on Multi-Dialect SQLs
+### 🕊️ Generalization on Multi-Dialect SQLs
 
  | Model | PostgreSQL | MySQL | SQL Server | Oracle | **Overall** |
   |---|---|---|---|---|---|
   | Qwen2.5-Coder-7B | 20.65 | 23.47 | 19.39 | 7.14 | **18.60** |
   | BIRD-Fixer-7B | 22.10 | 26.53 | 29.59 | 7.14 | **21.58** |
-  | BIRD-Talon-7B | 28.62 | 33.67 | 36.73 | 20.41 | **29.47** |
+  | BIRD-Talon-7B (Ours) | 28.62 | 33.67 | 36.73 | 20.41 | **29.47** |
 
 BIRD-Talon-7B demonstrates strong **cross-dialect generalization**, achieving significant improvements over baselines without any multi-dialect training data. The four-stage training pipeline teaches the model a general debugging strategy rather than memorizing dialect-specific syntax, enabling it to adapt based on environment feedback **without needing extra training**.
 
