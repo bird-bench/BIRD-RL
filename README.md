@@ -65,7 +65,7 @@ Our BIRD-RL models achieve **Success Rate** (SR%) comparable to state-of-the-art
 ### 🕊️ SQL Generation Performance on BIRD
 
 <p align="center">
-  <img src="assets/bird_performance.png" width="80%">
+  <img src="assets/bird_performance.png" width="60%">
 </p>
 
 As a unified model optimized via multi-task training, BIRD-Zeno-7B achieves competitive SQL generation performance on BIRD, comparable to specialized SQL generation models such as Reasoning-SQL-7B, while simultaneously maintaining strong SQL debugging capability.
